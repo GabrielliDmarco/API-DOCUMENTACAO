@@ -16,6 +16,20 @@ paths:
 
     post:
       summary: Cria um novo produto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                preco:
+                  type: number
+              required:
+                - nome
+                - preco
       responses:
         '201':
           description: Produto criado com sucesso
@@ -27,6 +41,13 @@ paths:
   /produtos/{id}:
     get:
       summary: Retorna um produto específico
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do produto
+          schema:
+            type: string
       responses:
         '200':
           description: Produto retornado com sucesso
@@ -35,6 +56,27 @@ paths:
 
     post:
       summary: Atualiza um produto existente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do produto
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                preco:
+                  type: number
+              required:
+                - nome
+                - preco
       responses:
         '200':
           description: Produto atualizado com sucesso
@@ -47,6 +89,13 @@ paths:
 
     delete:
       summary: Deleta um produto existente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do produto
+          schema:
+            type: string
       responses:
         '204':
           description: Produto deletado com sucesso
@@ -64,17 +113,40 @@ paths:
 
     post:
       summary: Cria um novo cliente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                senha:
+                  type: string
+                  minLength: 8
+              required:
+                - email
+                - senha
       responses:
         '201':
           description: Cliente criado com sucesso
         '406':
-          description: Caso faltem informações (email e senha)
+          description: Caso faltem informações (email e senha são obrigatórios)
         '500':
           description: Caso ocorra erro no servidor
 
   /clientes/{id}:
     get:
       summary: Retorna um cliente específico
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do cliente
+          schema:
+            type: string
       responses:
         '200':
           description: Cliente retornado com sucesso
@@ -83,6 +155,29 @@ paths:
 
     post:
       summary: Atualiza um cliente existente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do cliente
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                senha:
+                  type: string
+                  minLength: 8
+              required:
+                - email
+                - senha
       responses:
         '200':
           description: Cliente atualizado com sucesso
@@ -95,6 +190,13 @@ paths:
 
     delete:
       summary: Deleta um cliente existente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do cliente
+          schema:
+            type: string
       responses:
         '204':
           description: Cliente deletado com sucesso
@@ -104,6 +206,21 @@ paths:
   /auth:
     post:
       summary: Faz o login do cliente e retorna um token JWT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                senha:
+                  type: string
+              required:
+                - email
+                - senha
       responses:
         '200':
           description: Login bem-sucedido, token JWT retornado
